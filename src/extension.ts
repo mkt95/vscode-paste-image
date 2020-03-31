@@ -76,6 +76,7 @@ class Paster {
     static insertPatternConfig: string;
     static showFilePathConfirmInputBox: boolean;
     static filePathConfirmInputBoxMode: string;
+    static moveToAltTextOnPaste: boolean;
 
     public static paste() {
         // get current edit file path
@@ -135,6 +136,7 @@ class Paster {
         this.insertPatternConfig = vscode.workspace.getConfiguration('pasteImage')['insertPattern'];
         this.showFilePathConfirmInputBox = vscode.workspace.getConfiguration('pasteImage')['showFilePathConfirmInputBox'] || false;
         this.filePathConfirmInputBoxMode = vscode.workspace.getConfiguration('pasteImage')['filePathConfirmInputBoxMode'];
+        this.moveToAltTextOnPaste = vscode.workspace.getConfiguration('pasteImage')['moveToAltTextOnPaste'] || false;
 
         // replace variable in config
         this.defaultNameConfig = this.replacePathVariable(this.defaultNameConfig, projectPath, filePath, (x) => `[${x}]`);
@@ -177,16 +179,19 @@ class Paster {
                 }
 
                 imagePath = this.renderFilePath(editor.document.languageId, this.basePathConfig, imagePath, this.forceUnixStyleSeparatorConfig, this.prefixConfig, this.suffixConfig);
-
+                let current = editor.selection;
                 editor.edit(edit => {
-                    let current = editor.selection;
-
                     if (current.isEmpty) {
                         edit.insert(current.start, imagePath);
                     } else {
                         edit.replace(current, imagePath);
                     }
                 });
+
+                if (Paster.moveToAltTextOnPaste) {
+                    const alt_text_position = current.start.translate(0, imagePath.indexOf('[') + 1);
+                    editor.selection = new vscode.Selection(alt_text_position, alt_text_position);
+                }
             });
         }).catch(err => {
             if (err instanceof PluginError) {

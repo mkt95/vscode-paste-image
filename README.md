@@ -144,6 +144,10 @@ Now you can enable `pasteImage.showFilePathConfirmInputBox` to modify file path 
     - `fullPath`: show full path in inputBox, so you can change the path or name. Default value.
     - `onlyName`: show only file name in inputBox, so it's easy to change name.
 
+- `pateImage.moveToAltTextOnPaste`
+
+    Enabling this `boolean` setting will make Paste Image place the cursor in the alternate text for the resulting image. Default is `false`.
+
 ## Config Example
 
 I use vscode to edit my hexo blog. The folder struct like this:

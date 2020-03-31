@@ -111,6 +111,11 @@
           ],
           "default": "fullPath",
           "description": "Set the mode of file path confirm inputbox"
+        },
+        "pasteImage.moveToAltTextOnPaste": {
+          "type": "boolean",
+          "default": false,
+          "description": "Set to true if you want the cursor to move to alternate text field upon paste."
         }
       }
     },
