@@ -2,8 +2,8 @@
   "name": "vscode-paste-image",
   "displayName": "Paste Image",
   "description": "paste image from clipboard directly",
-  "version": "1.0.4",
-  "publisher": "mushan",
+  "version": "1.0.6",
+  "publisher": "mkt95",
   "author": {
     "name": "mushan",
     "email": "mushanmail@126.com"
